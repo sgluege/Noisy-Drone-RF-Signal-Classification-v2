@@ -98,6 +98,17 @@ def plot_two_channel_spectrogram(spectrogram_2d, title='', figsize=(10,6)):
     plt.show()
 
 
+def plot_log_prower_spec(spectrogram_2d, title='', figsize=(10,6)):
+
+    # Log power spectral density, also log10(|signal|^2)
+    figure = plt.figure(figsize=figsize)
+    plt.imshow(np.log10(np.sqrt(spectrogram_2d[0,:,:]**2 + spectrogram_2d[1,:,:]**2)))
+    plt.colorbar()
+    plt.title(title)
+    plt.show()
+
+
+
 def plot_two_channel_iq(iq_2d, title='', figsize=(10,6)):
     figure, axis = plt.subplots(2, 1, figsize=figsize)
     axis[0].plot(iq_2d[0,:]) 
@@ -195,7 +206,7 @@ snr_list = drone_dataset.get_snrs()
 files = drone_dataset.get_files()
 
 # get sample from the dataset
-iq_data, target, snr, sample_id, transformed_data = drone_dataset[1]
+iq_data, target, snr, sample_id, transformed_data = drone_dataset[3]
 
 transformed_data.shape
 
@@ -208,3 +219,5 @@ plot_two_channel_iq(iq_data.cpu().numpy(), title=plot_title)
 plot_two_channel_spectrogram(transformed_data.cpu().numpy(), title=plot_title)
 plot_input_data(spectrogram_2d=transformed_data.cpu().numpy(),
                 iq_2d=iq_data.cpu().numpy(), title=plot_title)
+
+plot_log_prower_spec(spectrogram_2d=transformed_data.cpu().numpy(), title=plot_title)
