@@ -107,6 +107,35 @@ def plot_two_channel_iq(iq_2d, title='', figsize=(10,6)):
     figure.suptitle(title)
     plt.show()
 
+
+def plot_input_data(spectrogram_2d, iq_2d, title='', figsize=(10,9)):
+
+    fig, axs = plt.subplot_mosaic([['spec_re', 'spec_im'], ['spec_re', 'spec_im'], ['iq_re', 'iq_re'], ['iq_im', 'iq_im']], figsize=figsize) # layout='constrained'
+    
+    # plot spectrogram Re and Im
+    spec_re = axs['spec_re'].imshow(spectrogram_2d[0,:,:]) #, aspect='auto', origin='lower')
+    axs['spec_re'].set_title('Re', fontsize=10)
+    fig.colorbar(spec_re, ax=axs['spec_re'], location='right', shrink=0.5)
+
+    spec_im = axs['spec_im'].imshow(spectrogram_2d[1,:,:]) #, aspect='auto', origin='lower')
+    axs['spec_im'].set_title('Im', fontsize=10)
+    fig.colorbar(spec_im, ax=axs['spec_im'], location='right', shrink=0.5)
+
+    # plot iq Re and Im
+    axs['iq_re'].plot(iq_2d[0,:])
+    axs['iq_re'].set_title('IQ data')
+    axs['iq_re'].set_ylabel('Re', rotation=0)
+
+    axs['iq_im'].plot(iq_2d[1,:])
+    # axs['iq_im'].set_title('Im')
+    axs['iq_im'].set_xlabel('Time (samples)')
+    axs['iq_im'].set_ylabel('Im', rotation=0)
+    
+    # add figure title
+    fig.suptitle(title + '\n\nSpectrogram')
+    plt.savefig('sample_input_data.png', dpi=300, bbox_inches='tight')   
+    # plt.show()
+
 project_path = './'
 data_path = '/data/glue/drones/preprocessed/iq_and_spec/long/'
 
@@ -165,8 +194,6 @@ targets = drone_dataset.get_targets()
 snr_list = drone_dataset.get_snrs()
 files = drone_dataset.get_files()
 
-targets[1]
-
 # get sample from the dataset
 iq_data, target, snr, sample_id, transformed_data = drone_dataset[1]
 
@@ -174,8 +201,10 @@ transformed_data.shape
 
 # plot IQ data
 target_name = class_names[target]
-plot_title = 'Sample ID: ' + str(sample_id) + ' Target: ' + target_name + ' SNR: ' + str(int(snr))   
+plot_title = 'Sample ID: ' + str(sample_id) + ', Class: ' + target_name + ', SNR: ' + str(snr.numpy()) + 'dB'
 print(plot_title)
 
 plot_two_channel_iq(iq_data.cpu().numpy(), title=plot_title)
 plot_two_channel_spectrogram(transformed_data.cpu().numpy(), title=plot_title)
+plot_input_data(spectrogram_2d=transformed_data.cpu().numpy(),
+                iq_2d=iq_data.cpu().numpy(), title=plot_title)
