@@ -99,14 +99,19 @@ def plot_two_channel_spectrogram(spectrogram_2d, title='', figsize=(10,6)):
 
 
 def plot_log_prower_spec(spectrogram_2d, title='', figsize=(10,6)):
-
+    #fft-shift so dass das Spektrogram von -7MHz bis 7MHz statt von 0 bis 14MHz geht
+    spectrogram_2d = np.roll(spectrogram_2d,n_fft//2, axis=1)
     # Log power spectral density, also log10(|signal|^2)
-    figure = plt.figure(figsize=figsize)
-    plt.imshow(np.log10(np.sqrt(spectrogram_2d[0,:,:]**2 + spectrogram_2d[1,:,:]**2)))
+    plt.imshow(
+        np.log10(np.sqrt(spectrogram_2d[0,:,:]**2 + spectrogram_2d[1,:,:]**2)),
+        extent=[0,input_vec_length/(sampling_rate*1e6),-sampling_rate*1e6/2,sampling_rate*1e6/2],
+        aspect="auto"
+        )
     plt.colorbar()
     plt.title(title)
+    plt.xlabel("Time (s)") 
+    plt.ylabel("Frequency (Hz)") 
     plt.show()
-
 
 
 def plot_two_channel_iq(iq_2d, title='', figsize=(10,6)):
