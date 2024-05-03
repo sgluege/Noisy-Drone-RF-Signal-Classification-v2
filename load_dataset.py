@@ -98,8 +98,8 @@ def plot_two_channel_spectrogram(spectrogram_2d, title='', figsize=(10,6)):
     plt.show()
 
 
-def plot_log_prower_spec(spectrogram_2d, title='', figsize=(10,6)):
-    #fft-shift so dass das Spektrogram von -7MHz bis 7MHz statt von 0 bis 14MHz geht
+def plot_log_prower_spec(spectrogram_2d, title='', n_fft=1024, sampling_rate=14e6):
+    #fft-shift such that freq axis is in [-7, 7]MHz instead of [0, 14] MHz
     spectrogram_2d = np.roll(spectrogram_2d,n_fft//2, axis=1)
     # Log power spectral density, also log10(|signal|^2)
     plt.imshow(
@@ -151,6 +151,60 @@ def plot_input_data(spectrogram_2d, iq_2d, title='', figsize=(10,9)):
     fig.suptitle(title + '\n\nSpectrogram')
     plt.savefig('sample_input_data.png', dpi=300, bbox_inches='tight')   
     # plt.show()
+
+
+
+def plot_input_data_powerspec(spectrogram_2d, iq_2d, title='', n_fft=1024, win_length=1024, hop_length=1024, sample_freq=14e6, figsize=(10,4)):
+
+    input_vec_length = iq_2d.shape[1]
+    signal_time = 1/sample_freq * input_vec_length # signal time in seconds
+    
+    # create time axis for IQ data
+    time_axis_in_time_domain = np.arange(0, signal_time, 1/sample_freq) # time axis in time domain
+    time_axis_in_time_domain_in_ms = time_axis_in_time_domain * 1000 # convert to ms
+
+    # create time and frequency axis for spectrogram
+    time_per_fft = hop_length/sample_freq # time per fft in seconds
+    time_axis = np.arange(0, signal_time, time_per_fft)
+    time_axis_in_ms = time_axis * 1000 # convert to ms
+    freqs = sample_freq / win_length * np.arange(-n_fft/2, n_fft/2) # as we used the two-sided spectrum, we need to shift the frequency axis
+    freqs_in_mhz = freqs / 1e6
+
+    fig, axs = plt.subplot_mosaic([['spec_power', 'spec_power', 'spec_power', 'iq_re', 'iq_re', 'iq_re', 'iq_re'],
+                                   ['spec_power', 'spec_power', 'spec_power', 'iq_im', 'iq_im', 'iq_im', 'iq_im']], figsize=figsize, layout='constrained')
+
+    # plot spectrogram Re and Im
+    # spec_re = axs['spec_re'].imshow(spectrogram_2d[0,:,:]) #, aspect='auto', origin='lower')
+    # axs['spec_re'].set_title('Re', fontsize=10)
+    # fig.colorbar(spec_re, ax=axs['spec_re'], location='right', shrink=0.5)
+
+    # plot power spectrum
+        #fft-shift such that freq axis is in [-7, 7]MHz instead of [0, 14] MHz
+    spectrogram_2d = np.roll(spectrogram_2d,n_fft//2, axis=1)
+    # Log power spectral density, also log10(|signal|^2)
+    power_spec = np.log10(np.sqrt(spectrogram_2d[0,:,:]**2 + spectrogram_2d[1,:,:]**2))
+    spec_power = axs['spec_power'].imshow(power_spec, aspect='auto' ,extent=[time_axis_in_ms[0], time_axis_in_ms[-1], freqs_in_mhz[0], freqs_in_mhz[-1]])
+    axs['spec_power'].set_title('Power Spectrum', fontsize=10)
+    fig.colorbar(spec_power, ax=axs['spec_power'], location='right', shrink=0.5)
+    axs['spec_power'].set_xlabel('Time (ms)')
+    axs['spec_power'].set_ylabel('Frequency (MHz)')
+
+    # plot iq Re and Im
+    axs['iq_re'].plot(time_axis_in_time_domain_in_ms, iq_2d[0,:])
+    axs['iq_re'].set_title('IQ data')
+    axs['iq_re'].set_ylabel('Re', rotation=0)
+
+    axs['iq_im'].plot(time_axis_in_time_domain_in_ms, iq_2d[1,:])
+    # axs['iq_im'].set_title('Im')
+    axs['iq_im'].set_xlabel('Time (ms)')
+    axs['iq_im'].set_ylabel('Im', rotation=0)
+    
+    # add figure title
+    fig.suptitle(title)
+    plt.savefig('sample_input_data.png', dpi=300, bbox_inches='tight')   
+    plt.show()
+
+
 
 project_path = './'
 data_path = '/data/glue/drones/preprocessed/iq_and_spec/long/'
@@ -211,7 +265,7 @@ snr_list = drone_dataset.get_snrs()
 files = drone_dataset.get_files()
 
 # get sample from the dataset
-iq_data, target, snr, sample_id, transformed_data = drone_dataset[3]
+iq_data, target, snr, sample_id, transformed_data = drone_dataset[7]
 
 transformed_data.shape
 
@@ -220,9 +274,10 @@ target_name = class_names[target]
 plot_title = 'Sample ID: ' + str(sample_id) + ', Class: ' + target_name + ', SNR: ' + str(snr.numpy()) + 'dB'
 print(plot_title)
 
-plot_two_channel_iq(iq_data.cpu().numpy(), title=plot_title)
-plot_two_channel_spectrogram(transformed_data.cpu().numpy(), title=plot_title)
-plot_input_data(spectrogram_2d=transformed_data.cpu().numpy(),
-                iq_2d=iq_data.cpu().numpy(), title=plot_title)
+# plot_two_channel_iq(iq_data.cpu().numpy(), title=plot_title)
+# plot_two_channel_spectrogram(transformed_data.cpu().numpy(), title=plot_title)
+# plot_input_data(spectrogram_2d=transformed_data.cpu().numpy(),
+#                 iq_2d=iq_data.cpu().numpy(), title=plot_title)
+# plot_log_prower_spec(spectrogram_2d=transformed_data.cpu().numpy(), n_fft=1024, sampling_rate=14e6, title=plot_title)
 
-plot_log_prower_spec(spectrogram_2d=transformed_data.cpu().numpy(), title=plot_title)
+plot_input_data_powerspec(spectrogram_2d=transformed_data.cpu().numpy(), iq_2d=iq_data.cpu().numpy(), title=plot_title)
