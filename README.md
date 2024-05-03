@@ -16,6 +16,8 @@ Use the script `load_dataset.py` to load the dataset using a custom torch Datalo
 ![sample_input_data.png](doc/img/Taranis_snr-20.png)
 ![sample_input_data.png](doc/img/Taranis_snr4.png)
 ![sample_input_data.png](doc/img/Turnigy_snr26.png)
+![sample_input_data.png](doc/img/DJI_snr0.png)
+
 Note that we plot the power spectrum of the IQ signal, which is the log10 of the absolute value of the FFT of the IQ signal 
 ```python
 power_spec = np.log10(np.sqrt(spectrogram_2d[0,:,:]**2 + spectrogram_2d[1,:,:]**2))

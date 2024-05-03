@@ -265,7 +265,7 @@ snr_list = drone_dataset.get_snrs()
 files = drone_dataset.get_files()
 
 # get sample from the dataset
-iq_data, target, snr, sample_id, transformed_data = drone_dataset[7]
+iq_data, target, snr, sample_id, transformed_data = drone_dataset[19]
 
 transformed_data.shape
 
