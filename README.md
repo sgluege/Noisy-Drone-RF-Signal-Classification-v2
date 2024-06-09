@@ -11,12 +11,12 @@ It comes in the form of 3 filetypes:
 
 ## Load and inspect the dataset
 Use the script `load_dataset.py` to load the dataset using a custom torch Dataloader. It also plots a sample of the dataset which should look like this: 
-![sample_input_data.png](doc/img/FutabaT14_snr24.png)
-![sample_input_data.png](doc/img/Noise_snr10.png)
-![sample_input_data.png](doc/img/Taranis_snr-20.png)
-![sample_input_data.png](doc/img/Taranis_snr4.png)
-![sample_input_data.png](doc/img/Turnigy_snr26.png)
-![sample_input_data.png](doc/img/DJI_snr0.png)
+![sample_input_data.png](doc/img/Noise_snr22.png)
+![sample_input_data.png](doc/img/DJI_snr30.png)
+![sample_input_data.png](doc/img/DJI_snr6.png)
+![sample_input_data.png](doc/img/FutabaT14_snr26.png)
+![sample_input_data.png](doc/img/Taranis_snr-4.png)
+
 
 Note that we plot the power spectrum of the IQ signal, which is the log10 of the absolute value of the FFT of the IQ signal 
 ```python

@@ -246,7 +246,7 @@ snr_stats = pd.read_csv(data_path + 'SNR_stats.csv', index_col=0)
 snr_list = snr_stats['SNR'].values
 
 # set device
-device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda:4' if torch.cuda.is_available() else 'cpu')
 # device = torch.device('cpu')
 
 
@@ -265,7 +265,7 @@ snr_list = drone_dataset.get_snrs()
 files = drone_dataset.get_files()
 
 # get sample from the dataset
-iq_data, target, snr, sample_id, transformed_data = drone_dataset[19]
+iq_data, target, snr, sample_id, transformed_data = drone_dataset[9276]
 
 transformed_data.shape
 
