@@ -209,34 +209,6 @@ def plot_input_data_powerspec(spectrogram_2d, iq_2d, title='', n_fft=1024, win_l
 project_path = './'
 data_path = './data/'
 
-# global params for data preprocessing
-signal_freq = 2440  # frequenzy of the measurments to use in MHz (5.8GHz 2.44GHz od 869MHz )
-# snr_in_db_list = np.arange(30,-22,-2) # SNR to mix the signal/labnoise with gnoise and labnoise
-sampling_rate = 14 # downsample frequency in MHz
-# input_vec_length = 16384 # lenght of the input vector 2**14
-input_vec_length = 1048576 # lenght of the input vector 2**20
-# define vecor normalisation mehtodes for signal and noise iq data
-norm_method_signal = 'carrier' # mean, max, fft_max, max_smooth, max_fft_smooth, carrier
-norm_method_noise = 'mean' # mean, max, fft_max, max_smooth, max_fft_smooth, carrier
-moving_average_window_size = 256 # window size for moving average filter used for normalisation 
-# note that the signal spectrum is computed after normalisation and mixing with noise
-
-# define spectrum computation parameters 
-num_per_segments = 1024 # number of samples per segment for spectrogram computation
-num_samples_overlap = 0 # number of samples to overlap for spectrogram computation
-
-# create string to be used for filnames for this dataset
-file_name_extension = 'sigfreq_' + str(signal_freq) + \
-    '_samplefreq_' + str(sampling_rate) + \
-    '_inputlength_' + str(input_vec_length) + \
-    '_normsignal_' + norm_method_signal + \
-    '_normnoise_' + norm_method_noise + \
-    '_movavgwinsize_' + str(moving_average_window_size)
-
-
-# set path to stored IQ data
-data_path = data_path + file_name_extension + '/'
-
 # read statistics/class count of the dataset
 dataset_stats = pd.read_csv(data_path + 'class_stats.csv', index_col=0)
 class_names = dataset_stats['class'].values
