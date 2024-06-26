@@ -2,7 +2,7 @@
 Scripts to load and inspect the Noisy Drone RF Signal Classification v2 Dataset
 
 ## Dataset
-The dataset is available at [kaggle](https://www.kaggle.com/datasets/sgluege/noisy-drone-rf-signal-classification-v2). Download the dataset and place it in a subfolder `dataset/`. 
+The dataset is available at [kaggle](https://www.kaggle.com/datasets/sgluege/noisy-drone-rf-signal-classification-v2). Download the dataset and place it in a subfolder `data/`. 
 
 It comes in the form of 3 filetypes:
 - `class_stats.csv`: a single file containing the number of samples per class
