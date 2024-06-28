@@ -22,11 +22,21 @@ Note that we plot the power spectrum of the IQ signal, which is the log10 of the
 ```python
 power_spec = np.log10(np.sqrt(spectrogram_2d[0,:,:]**2 + spectrogram_2d[1,:,:]**2))
 ```
-## Cite the data
+## Related Literature
 
-If you find the data useful for your work please cite our related paper 
+Further information about the data, and how to build a classifier, can be found in our related manuscript. Please cite it if you find it useful.
+
+S. Glüge, M. Nyfeler, A. Aghaebrahimian, N. Ramagnano and C. Schüpbach, Robust Low-Cost Drone Detection and Classification in Low SNR Environments, arXiv:2406.18624 [eess.SP], https://arxiv.org/abs/2406.18624
 
 Bibtex:
 ```
-
+@misc{glüge2024robustlowcostdronedetection,
+title={Robust Low-Cost Drone Detection and Classification in Low SNR Environments},
+author={Stefan Glüge and Matthias Nyfeler and Ahmad Aghaebrahimian and Nicola Ramagnano and Christof Schüpbach},
+year={2024},
+eprint={2406.18624},
+archivePrefix={arXiv},
+primaryClass={eess.SP},
+url={https://arxiv.org/abs/2406.18624},
+}
 ```
