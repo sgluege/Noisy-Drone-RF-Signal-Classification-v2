@@ -26,17 +26,17 @@ power_spec = np.log10(np.sqrt(spectrogram_2d[0,:,:]**2 + spectrogram_2d[1,:,:]**
 
 Further information about the data, and how to build a classifier, can be found in our related manuscript. Please cite it if you find it useful.
 
-S. Glüge, M. Nyfeler, A. Aghaebrahimian, N. Ramagnano and C. Schüpbach, Robust Low-Cost Drone Detection and Classification in Low SNR Environments, arXiv:2406.18624 [eess.SP], https://arxiv.org/abs/2406.18624
+S. Glüge, M. Nyfeler, A. Aghaebrahimian, N. Ramagnano and C. Schüpbach, "Robust Low-Cost Drone Detection and Classification Using Convolutional Neural Networks in Low SNR Environments," in IEEE Journal of Radio Frequency Identification, vol. 8, pp. 821-830, 2024, doi: [10.1109/JRFID.2024.3487303](https://doi.org/10.1109/JRFID.2024.3487303)
 
-Bibtex:
 ```
-@misc{glüge2024robustlowcostdronedetection,
-title={Robust Low-Cost Drone Detection and Classification in Low SNR Environments},
-author={Stefan Glüge and Matthias Nyfeler and Ahmad Aghaebrahimian and Nicola Ramagnano and Christof Schüpbach},
-year={2024},
-eprint={2406.18624},
-archivePrefix={arXiv},
-primaryClass={eess.SP},
-url={https://arxiv.org/abs/2406.18624},
+@ARTICLE{10737118,
+  author={Glüge, Stefan and Nyfeler, Matthias and Aghaebrahimian, Ahmad and Ramagnano, Nicola and Schüpbach, Christof},
+  journal={IEEE Journal of Radio Frequency Identification}, 
+  title={Robust Low-Cost Drone Detection and Classification Using Convolutional Neural Networks in Low SNR Environments}, 
+  year={2024},
+  volume={8},
+  number={},
+  pages={821-830},
+  doi={10.1109/JRFID.2024.3487303}
 }
 ```
