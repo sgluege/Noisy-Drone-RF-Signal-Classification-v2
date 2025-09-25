@@ -98,22 +98,6 @@ def plot_two_channel_spectrogram(spectrogram_2d, title='', figsize=(10,6)):
     plt.show()
 
 
-def plot_log_prower_spec(spectrogram_2d, title='', n_fft=1024, sampling_rate=14e6):
-    #fft-shift such that freq axis is in [-7, 7]MHz instead of [0, 14] MHz
-    spectrogram_2d = np.roll(spectrogram_2d,n_fft//2, axis=1)
-    # Log power spectral density, also log10(|signal|^2)
-    plt.imshow(
-        np.log10(np.sqrt(spectrogram_2d[0,:,:]**2 + spectrogram_2d[1,:,:]**2)),
-        extent=[0,input_vec_length/(sampling_rate*1e6),-sampling_rate*1e6/2,sampling_rate*1e6/2],
-        aspect="auto"
-        )
-    plt.colorbar()
-    plt.title(title)
-    plt.xlabel("Time (s)") 
-    plt.ylabel("Frequency (Hz)") 
-    plt.show()
-
-
 def plot_two_channel_iq(iq_2d, title='', figsize=(10,6)):
     figure, axis = plt.subplots(2, 1, figsize=figsize)
     axis[0].plot(iq_2d[0,:]) 
@@ -151,7 +135,6 @@ def plot_input_data(spectrogram_2d, iq_2d, title='', figsize=(10,9)):
     fig.suptitle(title + '\n\nSpectrogram')
     plt.savefig('sample_input_data.png', dpi=300, bbox_inches='tight')   
     # plt.show()
-
 
 
 def plot_input_data_powerspec(spectrogram_2d, iq_2d, title='', n_fft=1024, win_length=1024, hop_length=1024, sample_freq=14e6, figsize=(10,4)):
