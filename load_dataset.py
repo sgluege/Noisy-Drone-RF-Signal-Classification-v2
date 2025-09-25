@@ -232,5 +232,4 @@ print(plot_title)
 # plot_two_channel_spectrogram(transformed_data.cpu().numpy(), title=plot_title)
 # plot_input_data(spectrogram_2d=transformed_data.cpu().numpy(),
 #                 iq_2d=iq_data.cpu().numpy(), title=plot_title)
-# plot_log_prower_spec(spectrogram_2d=transformed_data.cpu().numpy(), n_fft=1024, sampling_rate=14e6, title=plot_title)
 plot_input_data_powerspec(spectrogram_2d=transformed_data.cpu().numpy(), iq_2d=iq_data.cpu().numpy(), title=plot_title)
